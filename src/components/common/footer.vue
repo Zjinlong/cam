@@ -15,8 +15,6 @@ export default {
       }
   },
   mounted() {
-
-      console.log(this.hasScrollbar)
       if(document.documentElement.clientHeight>document.body.scrollHeight){
         //  this.ab = 'absolute'
         

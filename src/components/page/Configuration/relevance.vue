@@ -478,6 +478,7 @@ export default {
         },
         //   添加用户
         async establish() {
+            
             this.reltitle = '添加摄像头模型关联';
             this.sxt = '';
             this.mx = '';

@@ -116,32 +116,29 @@
 </template>
 
 <script>
-import Masks from '../Home/masks.vue'
-import Footer from '@/components/common/footer.vue'
-import { 
-      getBiaojiRecordsUnhandledTotalCount,
+import Masks from '../Home/masks.vue';
+import Footer from '@/components/common/footer.vue';
+import {
+    getBiaojiRecordsUnhandledTotalCount,
     getBiaojiRecordsUnhandledNewest100,
-    putBiaojiRecordsId, 
+    putBiaojiRecordsId,
     getBiaojiRecordCountOverallByStatus,
     getBiaojiRecordCountByStatus,
     getBiaojiRecordCountbyCamera
-    
-    } from './fetch.js';
-
-
+} from './fetch.js';
 
 export default {
-    components:{Masks,Footer},
-      data() {
+    components: { Masks, Footer },
+    data() {
         return {
             currentPage: 5,
-            ispop:false,
+            ispop: false,
             isbj: false,
             dialogFormVisible: false,
             formLabelWidth: '100px',
-            dispose:'',
-            bjval:0,
-            timer:'',
+            dispose: '',
+            bjval: 0,
+            timer: '',
             form: {
                 name: '',
                 password: '',
@@ -161,33 +158,32 @@ export default {
                 //     value: '123456',
                 //     biaojiImgUrl: 'https://www.lwavn.club/picture/cover/2f6473a4bb7b40cb97da72d4519f72fa?v=1594625769776'
                 // },
-              
             ]
         };
     },
-    created(){
-  let _this = this
-     _this.getnews()
-  //  setInterval(function(){
-  //  _this.getnews()
-  //  },10000)
-       _this.timer = setInterval(function() {
+    created() {
+        let _this = this;
+        _this.getnews();
+        //  setInterval(function(){
+        //  _this.getnews()
+        //  },10000)
+        _this.timer = setInterval(function() {
             _this.getnews();
         }, 10000);
     },
-     beforeDestroy() {
-      clearInterval(this.timer);
+    beforeDestroy() {
+        clearInterval(this.timer);
     },
     methods: {
-        async getnews(){
-          let res = await getBiaojiRecordsUnhandledNewest100()
-          let bjval = await getBiaojiRecordsUnhandledTotalCount()
-          this.bjval = bjval
-      //  let url = 'http://192.168.43.17:'
-//            res.forEach(item => {
-//    item.alertImgUrl = url+item.alertImgUrl
-//  });
-     this.tableData = res
+        async getnews() {
+            let res = await getBiaojiRecordsUnhandledNewest100();
+            let bjval = await getBiaojiRecordsUnhandledTotalCount();
+            this.bjval = bjval;
+            //  let url = 'http://192.168.43.17:'
+            //            res.forEach(item => {
+            //    item.alertImgUrl = url+item.alertImgUrl
+            //  });
+            this.tableData = res;
         },
 
         //   删除用户
@@ -196,34 +192,31 @@ export default {
         },
         //   编辑用户
         putRow(rows) {
-          this.dispose = rows
-          this.ispop = true;
+            this.dispose = rows;
+            this.ispop = true;
+        },
+        cancel() {
+            this.ispop = false;
+            // this.$message({
+            //               message: '取消编辑',
+            //               type: 'success'
+            //           });
+        },
+        async affirm(data) {
+            let res = await putBiaojiRecordsId(data.id, data);
 
-        },
-        cancel(){
- this.ispop = false;
-      this.$message({
-                    message: '取消编辑',
-                    type: 'success'
-                });
-        },
-    async affirm(data){
-    let res = await putBiaojiRecordsId(data.id,data)
-   
-this.$message({
+            this.$message({
                 message: '编辑成功',
                 type: 'success'
             });
-    
-       
- this.ispop = false;
- 
+
+            this.ispop = false;
         },
 
         //   添加用户
         establish() {
             this.form = {};
-      
+
             this.isbj = false;
         },
         //   确认添加或修改
@@ -231,7 +224,6 @@ this.$message({
             if (this.isbj) {
                 this.dialogFormVisible = false;
             } else {
-            
                 this.dialogFormVisible = false;
             }
         },
@@ -239,8 +231,7 @@ this.$message({
         onSubmit() {
             console.log('submit!');
         }
-    },
-  
+    }
 };
 </script>
 
@@ -248,7 +239,7 @@ this.$message({
 .user-box {
     padding: 30px 40px;
     min-height: 1000px;
-    margin-bottom:40px ;
+    margin-bottom: 40px;
     z-index: 9;
 }
 .demo-form-inline {
@@ -258,15 +249,15 @@ this.$message({
     width: 500px;
     margin: 50px auto;
 }
-.bjds{
-  /* float: right; */
+.bjds {
+    /* float: right; */
     height: 50px;
     line-height: 30px;
-  width: 100%;
-  text-align: center;
-  font-size: 20px;
-  font-weight: 600;
-  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
-      color: #409EFF;
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
+    font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+    color: #409eff;
 }
 </style>

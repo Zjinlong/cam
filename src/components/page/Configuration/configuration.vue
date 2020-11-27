@@ -41,7 +41,12 @@ import Footer from '@/components/common/footer.vue'
       handleClick(tab, event) {
 
         if(tab.name == 'first'){
-          
+          this.$refs.first.camlist()
+          console.log(this.$refs.first)
+        }else if(tab.name == 'second'){
+          this.$refs.second.modlist()
+        }else if(tab.name == 'fourth'){
+          this.$refs.fourth.relelist()
         }
       }
     }

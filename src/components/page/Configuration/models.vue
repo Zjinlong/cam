@@ -222,7 +222,7 @@ export default {
                 region: ''
             },
             bjArray: [],
-            multipleSelection:[],
+            multipleSelection: [],
             dataTotel: 0,
             pageNum: 1,
             tableDatas: [],
@@ -306,27 +306,26 @@ export default {
             rows.splice(index, 1);
             this.modlist();
         },
-                 handleSelectionChange(val) {
-        this.multipleSelection = val;
-      },
-       async pldel(){
-         if(this.multipleSelection.length == 0 ){
-      this.$message({
-                message: '请勾选需要删除的摄像头',
-                type: 'error'
-            });
-         }else{
- for(let i of this.multipleSelection){
-          await delModelservice(i.id);
-     }
-          this.$message({
-                message: '删除成功',
-                type: 'success'
-            });
-              this.modlist();
-         }
-    
-      },
+        handleSelectionChange(val) {
+            this.multipleSelection = val;
+        },
+        async pldel() {
+            if (this.multipleSelection.length == 0) {
+                this.$message({
+                    message: '请勾选需要删除的摄像头',
+                    type: 'error'
+                });
+            } else {
+                for (let i of this.multipleSelection) {
+                    await delModelservice(i.id);
+                }
+                this.$message({
+                    message: '删除成功',
+                    type: 'success'
+                });
+                this.modlist();
+            }
+        },
         //   编辑用户
         putRow(id, index, rows) {
             this.modtitle = '编辑模型';
@@ -355,10 +354,10 @@ export default {
             this.isbj = false;
             this.form = {};
         },
-               resetForm(formName) {
-            this.dialogFormVisible = false
-        this.$refs[formName].resetFields();
-      },
+        resetForm(formName) {
+            this.dialogFormVisible = false;
+            this.$refs[formName].resetFields();
+        },
         //   确认添加或修改
         async confirm(formName) {
             this.$refs[formName].validate(valid => {

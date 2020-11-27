@@ -211,10 +211,10 @@ export default {
         },
         cancel() {
             this.ispop = false;
-                this.$message({
-                    message: '取消编辑',
-                    type: 'success'
-                });
+                // this.$message({
+                //     message: '取消编辑',
+                //     type: 'success'
+                // });
         },
         async affirm(dispose) {
             let res = await putId(dispose.id, dispose);

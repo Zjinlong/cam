@@ -209,7 +209,96 @@ import Footer from '@/components/common/footer.vue'
 
 export default {
         components:{Footer},
-
+data() {
+        var checkuser = (rule, value, callback) => {
+            if (!isuser(value)) {
+                return callback(new Error('账号由3~18位英文字母或数组下划线组成'));
+            } else {
+                callback();
+            }
+        };
+        var checkemail = (rule, value, callback) => {
+            if (!isemail(value)) {               
+                if (value) {
+                     return callback(new Error('请输入正确的邮箱'));
+                } else {
+                      callback();
+                }
+            } else {
+                callback();
+            }
+        };
+        var checkphone = (rule, value, callback) => {
+            if (!isphone(value)) {
+                if (value) {                 
+                       return callback(new Error('请输入正确的手机号'));
+                } else {
+                    callback();
+                }
+            } else {
+                callback();
+            }
+        };
+        var checkpass = (rule, value, callback) => {
+            if (!ispass(value)) {
+                if (value) {
+                     return callback(new Error('请输入6-16位字符,必须包含数字，字母以及特殊字符(!@#$%^&*)'));
+                } else {
+                    callback();
+                   
+                }
+            } else {
+                callback();
+            }
+        };
+        return {
+            rules: {
+                group: [{ required: true, message: '角色不能为空', trigger: 'blur' }],
+                pass: [{ validator: checkpass, trigger: 'blur' }],
+                userName: [{ required: true, message: '账号不能为空', trigger: 'blur' }, { validator: checkuser, trigger: 'blur' }],
+                email: [{ validator: checkemail, trigger: 'blur' }],
+                mobile:[{ validator: checkphone, trigger: 'blur' }]
+            },
+            multipleSelection:[],
+            usertitle: '添加用户',
+            currentPage: 5,
+            isbj: false,    
+            dialogFormVisible: false,
+            issr: false,
+            formLabelWidth: '100px',
+            dialogpass: false,
+            u: '',
+            form: {
+                user: '',
+                password: '',
+                group: '',
+                email:'',
+                mobile:'',
+            },
+            forms: {
+                user: '',
+                password: ''
+            },
+            formInline: {
+                name: ''
+            },
+            istype: 'text',
+            currentPage: 1,
+            pageSize: 10,
+            tableDatas: [],
+            dataTotel: 0,
+            pageNum: 1,
+            tableData: [
+                {
+                    date: '2016-05-03',
+                    id: '115',
+                    user: 'username   ',
+                    group: '普通用户',
+                    password: '123456'
+                }
+            ]
+        };
+    },
     created() {
         this.userlist();
     },
@@ -350,7 +439,6 @@ export default {
                 bj.id = this.form.id;
                 bj.email = this.form.email;
                 bj.mobile = this.form.mobile;
-                // bj.password = this.form.password;
                 bj.realName = this.form.realName;
                 bj.role = this.form.role;
             
@@ -390,96 +478,7 @@ export default {
             this.tableDatas = d;
         }
     },
-    data() {
-        var checkuser = (rule, value, callback) => {
-            if (!isuser(value)) {
-                return callback(new Error('账号由3~18位英文字母或数组下划线组成'));
-            } else {
-                callback();
-            }
-        };
-        var checkemail = (rule, value, callback) => {
-            if (!isemail(value)) {               
-                if (value) {
-                     return callback(new Error('请输入正确的邮箱'));
-                } else {
-                      callback();
-                }
-            } else {
-                callback();
-            }
-        };
-        var checkphone = (rule, value, callback) => {
-            if (!isphone(value)) {
-                if (value) {                 
-                       return callback(new Error('请输入正确的手机号'));
-                } else {
-                    callback();
-                }
-            } else {
-                callback();
-            }
-        };
-        var checkpass = (rule, value, callback) => {
-            if (!ispass(value)) {
-                if (value) {
-                     return callback(new Error('请输入6-16位字符,必须包含数字，字母以及特殊字符(!@#$%^&*)'));
-                } else {
-                    callback();
-                   
-                }
-            } else {
-                callback();
-            }
-        };
-        return {
-            rules: {
-                group: [{ required: true, message: '角色不能为空', trigger: 'blur' }],
-                pass: [{ validator: checkpass, trigger: 'blur' }],
-                userName: [{ required: true, message: '账号不能为空', trigger: 'blur' }, { validator: checkuser, trigger: 'blur' }],
-                email: [{ validator: checkemail, trigger: 'blur' }],
-                mobile:[{ validator: checkphone, trigger: 'blur' }]
-            },
-            multipleSelection:[],
-            usertitle: '添加用户',
-            currentPage: 5,
-            isbj: false,    
-            dialogFormVisible: false,
-            issr: false,
-            formLabelWidth: '100px',
-            dialogpass: false,
-            u: '',
-            form: {
-                user: '',
-                password: '',
-                group: '',
-                email:'',
-                mobile:'',
-            },
-            forms: {
-                user: '',
-                password: ''
-            },
-            formInline: {
-                name: ''
-            },
-            istype: 'text',
-            currentPage: 1,
-            pageSize: 10,
-            tableDatas: [],
-            dataTotel: 0,
-            pageNum: 1,
-            tableData: [
-                {
-                    date: '2016-05-03',
-                    id: '115',
-                    user: 'username   ',
-                    group: '普通用户',
-                    password: '123456'
-                }
-            ]
-        };
-    }
+    
 };
 </script>
 

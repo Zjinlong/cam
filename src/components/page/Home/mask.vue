@@ -55,10 +55,10 @@
   <i class="el-icon-error" @click="showerror()"></i>
         </div>    
         <div class="imgs">
-            <div :style="{width:dd.w+'px',height:dd.h+'px',position:'absolute',left:dd.x+'px',top:dd.y+'px',background:'transparent',  border: '2px solid red', zIndex: '999'}" v-show="isImg"> 
-                             <span :style="{position:'absolute',left:'50%',top:'-30px',color:'red' ,zIndex: '999',fontWeight:' 600',transform: 'translateX(-50%)',width: '100px',textAlign: 'center',fontSize:'20px'}">{{dd.alertTypeName}}</span>
+            <div :style="{width:dispose.w+'px',height:dispose.h+'px',position:'absolute',left:dispose.x+'px',top:dispose.y+'px',background:'transparent',  border: '2px solid red', zIndex: '999'}" v-show="isImg"> 
+                             <span :style="{position:'absolute',left:'50%',top:'-30px',color:'red' ,zIndex: '999',fontWeight:' 600',transform: 'translateX(-50%)',width: '100px',textAlign: 'center',fontSize:'20px'}">{{dispose.alertTypeName}}</span>
                          </div>
-  <img :src="dd.alertImgUrl" alt="">
+  <img :src="dispose.alertImgUrl" alt="">
         </div>
       
     </div>
@@ -66,7 +66,7 @@
 
 </template>
 
-<script>
+<script>   
 export default {
     data() {
         return {
@@ -96,17 +96,23 @@ export default {
             if (img.complete) {
                 // console.log(img.width, img.height,"阿三大苏打萨达萨达是");
             }
+            
             let _this = this
             img.onload = function() {
-        
-         
-            //   1454 777   300 200  1454/300 
+
+          
+                if(img.width >= img.height){
                 let zw = 300 / img.width;
                 let imgwh = (img.height/img.width)
                 this.imgHeight = imgwh*img.width
                 let zh =   this.imgHeight  / img.height;
+
+                }else{
+                  this.imgHeight = img.width
+                }
+       
                 _this.dispose.xs = _this.dispose.x * zw;
-                _this.dispose.ys = _this.dispose.y *zw;
+                _this.dispose.ys = _this.dispose.y * zw;
                 _this.dispose.ws = _this.dispose.w * zw;
                 _this.dispose.hs = _this.dispose.h * zw;
                   _this.isImg = true   
