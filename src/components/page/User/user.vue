@@ -204,12 +204,12 @@
 import { isuser, ispass, isemail, isphone } from './regex.js';
 import { getuserlist, postuserlist, delusers, putusers, getusers } from './fetch.js';
 import jwt from 'jsonwebtoken';
-import Footer from '@/components/common/footer.vue'
-
+import Footer from '@/components/common/footer.vue';
 
 export default {
-        components:{Footer},
-data() {
+    components: { Footer },
+    data() {
+        // 自定义验证
         var checkuser = (rule, value, callback) => {
             if (!isuser(value)) {
                 return callback(new Error('账号由3~18位英文字母或数组下划线组成'));
@@ -218,11 +218,11 @@ data() {
             }
         };
         var checkemail = (rule, value, callback) => {
-            if (!isemail(value)) {               
+            if (!isemail(value)) {
                 if (value) {
-                     return callback(new Error('请输入正确的邮箱'));
+                    return callback(new Error('请输入正确的邮箱'));
                 } else {
-                      callback();
+                    callback();
                 }
             } else {
                 callback();
@@ -230,8 +230,8 @@ data() {
         };
         var checkphone = (rule, value, callback) => {
             if (!isphone(value)) {
-                if (value) {                 
-                       return callback(new Error('请输入正确的手机号'));
+                if (value) {
+                    return callback(new Error('请输入正确的手机号'));
                 } else {
                     callback();
                 }
@@ -242,27 +242,27 @@ data() {
         var checkpass = (rule, value, callback) => {
             if (!ispass(value)) {
                 if (value) {
-                     return callback(new Error('请输入6-16位字符,必须包含数字，字母以及特殊字符(!@#$%^&*)'));
+                    return callback(new Error('请输入6-16位字符,必须包含数字，字母以及特殊字符(!@#$%^&*)'));
                 } else {
                     callback();
-                   
                 }
             } else {
                 callback();
             }
         };
+        
         return {
             rules: {
                 group: [{ required: true, message: '角色不能为空', trigger: 'blur' }],
                 pass: [{ validator: checkpass, trigger: 'blur' }],
                 userName: [{ required: true, message: '账号不能为空', trigger: 'blur' }, { validator: checkuser, trigger: 'blur' }],
                 email: [{ validator: checkemail, trigger: 'blur' }],
-                mobile:[{ validator: checkphone, trigger: 'blur' }]
+                mobile: [{ validator: checkphone, trigger: 'blur' }]
             },
-            multipleSelection:[],
+            multipleSelection: [],
             usertitle: '添加用户',
             currentPage: 5,
-            isbj: false,    
+            isbj: false,
             dialogFormVisible: false,
             issr: false,
             formLabelWidth: '100px',
@@ -272,8 +272,8 @@ data() {
                 user: '',
                 password: '',
                 group: '',
-                email:'',
-                mobile:'',
+                email: '',
+                mobile: ''
             },
             forms: {
                 user: '',
@@ -316,24 +316,24 @@ data() {
                 } else if (i.status == 1) {
                     i.status = '已停用';
                 }
-                  if (i.role == 'ROLE_ADMIN') {
+                if (i.role == 'ROLE_ADMIN') {
                     i.role = '管理员';
-                } else  {
+                } else {
                     i.role = '普通用户';
                 }
             }
         },
-        handleSizeChange(val) {
-       
-        },
+        handleSizeChange(val) {},
+        // 分页
         handleCurrentChange(val) {
             this.pageNum = val;
             this.tableDatas = this.tableData.slice((val - 1) * this.pageSize, val * this.pageSize);
         },
-           resetForm(formName) {
-            this.dialogpass = false
-        this.$refs[formName].resetFields();
-      },
+        // 关闭弹框
+        resetForm(formName) {
+            this.dialogpass = false;
+            this.$refs[formName].resetFields();
+        },
         //   删除用户
         async deleteRow(id, index, rows) {
             let res = await delusers(id.userName);
@@ -342,11 +342,12 @@ data() {
                 type: 'success'
             });
             rows.splice(index, 1);
-             this.userlist();
+            this.userlist();
         },
-         handleSelectionChange(val) {
+        handleSelectionChange(val) {
             this.multipleSelection = val;
         },
+        // 批量删除
         async pldel() {
             if (this.multipleSelection.length == 0) {
                 this.$message({
@@ -355,9 +356,9 @@ data() {
                 });
             } else {
                 for (let i of this.multipleSelection) {
-                    if(i.userName == 'admin'){
-                    }else{
-                    await delusers(i.userName);
+                    if (i.userName == 'admin') {
+                    } else {
+                        await delusers(i.userName);
                     }
                 }
                 this.$message({
@@ -398,7 +399,7 @@ data() {
                 let data = {};
                 data = this.form;
                 data.createTime = new Date().getTime();
-               
+
                 if (this.form.role == 'ROLE_USER') {
                     data.roleId = 2;
                 } else {
@@ -420,10 +421,10 @@ data() {
                 data.userName = this.forms.userName;
                 if (valid) {
                     let res = await putusers(u, data);
-                     this.$message({
-                message: '修改成功',
-                type: 'success'
-            });
+                    this.$message({
+                        message: '修改成功',
+                        type: 'success'
+                    });
                     this.dialogpass = false;
                     await this.userlist();
                 } else {
@@ -441,15 +442,15 @@ data() {
                 bj.mobile = this.form.mobile;
                 bj.realName = this.form.realName;
                 bj.role = this.form.role;
-            
-                if(this.form.status == '正常'){
+
+                if (this.form.status == '正常') {
                     bj.status = 0;
-                }else if(this.form.status == '已停用'){
+                } else if (this.form.status == '已停用') {
                     bj.status = 1;
-                }else{
-                    bj.status = this.form.status;                    
+                } else {
+                    bj.status = this.form.status;
                 }
-               
+
                 bj.userName = this.form.userName;
                 if (this.form.role == 'ROLE_USER') {
                     bj.roleId = 2;
@@ -459,12 +460,12 @@ data() {
 
                 this.dialogFormVisible = false;
                 let res = await putusers(this.u, bj);
-                 this.$message({
-                message: '修改成功',
-                type: 'success'
-            }); 
+                this.$message({
+                    message: '修改成功',
+                    type: 'success'
+                });
             } else {
-                 data.status = 0;
+                data.status = 0;
                 let res = await postuserlist(data);
                 this.dialogFormVisible = false;
             }
@@ -477,8 +478,7 @@ data() {
             d.push(res);
             this.tableDatas = d;
         }
-    },
-    
+    }
 };
 </script>
 

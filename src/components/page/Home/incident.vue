@@ -11,7 +11,6 @@ created(){
 },
 mounted(){
 this.initData()
-
 },
 methods:{
     //初始化数据

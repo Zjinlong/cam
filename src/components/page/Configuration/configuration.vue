@@ -16,7 +16,6 @@
        <Gateway ref="third"/>
     </el-tab-pane> -->
   </el-tabs>
-  <!-- <el-footer>Footer</el-footer> -->
   </div>
   <Footer :top="'absolute'"></Footer>
 
@@ -42,7 +41,7 @@ import Footer from '@/components/common/footer.vue'
 
         if(tab.name == 'first'){
           this.$refs.first.camlist()
-          console.log(this.$refs.first)
+     
         }else if(tab.name == 'second'){
           this.$refs.second.modlist()
         }else if(tab.name == 'fourth'){

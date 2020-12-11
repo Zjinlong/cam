@@ -14,20 +14,9 @@ export default {
           ab:''
       }
   },
-  mounted() {
-      if(document.documentElement.clientHeight>document.body.scrollHeight){
-        //  this.ab = 'absolute'
-        
-      }else{
-        //  this.ab = 'absolute'
-      }
-
-      
+  mounted() {   
   },
   methods: {
-            hasScrollbar() {
-    return document.body.scrollHeight > (window.innerHeight || document.documentElement.clientHeight);
-}
   },
 }
 </script>

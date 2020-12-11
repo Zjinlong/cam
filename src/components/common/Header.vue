@@ -9,12 +9,6 @@
                         class="header-img"
                         style="width:auto;height:100%"
                     />
-                    <!-- <img
-                        src="../../assets/logo.png"
-                        alt
-                        class="header-img"
-                        style="width:auto;height:100%"
-                    /> -->
                    <p class="titleP">
                      配电站房智能安检系统
                      </p> 
@@ -22,9 +16,7 @@
             </el-col>
             <el-col :span="8" >
                 <div class="title-content" style="float: right;">
-                    <!--<div class="header-title">输电线路人工智能图像识别云服务</div>-->
-                    <!-- <div class="header-title">直升机巡视图片查缺系统</div> -->
-                    <!-- <div class="header-title">变电站(配电站)巡视图片查缺系统</div> -->
+     
                     <div class="header-tabs">
                         <el-menu
                             :default-active="activeIndex"
@@ -44,18 +36,6 @@
                                 class="menui"
                                 :class="{'aa':item.show==true}"
                             >{{item.name}}</el-menu-item>
-                            <!-- <el-menu-item index="/analysis">智能分析</el-menu-item>
-                            <el-menu-item index="/user">用户管理</el-menu-item>
-                            <el-menu-item index="/business">基本信息</el-menu-item>
-                            <el-menu-item index="/model">模型管理</el-menu-item>-->
-
-                            <!-- <el-menu-item index="/analysis">智能分析</el-menu-item>
-                            <el-menu-item index="/user" v-if="role == '管理员' || role == '系统管理员'">用户管理</el-menu-item>
-                            <el-menu-item
-                                index="/business"
-                                v-if="role == '管理员' || role == '系统管理员'"
-                            >基本信息</el-menu-item>
-                            <el-menu-item index="/model" v-if="role == '系统管理员'">模型管理</el-menu-item>-->
                         </el-menu>
                     </div>
                 </div>
@@ -160,6 +140,7 @@ import { isuser, ispass, isemail, isphone } from '../page/User/regex.js';
 
 export default {
     data() {
+    // 自定义验证
         const validatePass = (rule, value, callback) => {
             const reg = new RegExp('^(?![A-Za-z0-9]+$)(?![a-z0-9\\W]+$)(?![A-Za-z\\W]+$)(?![A-Z0-9\\W]+$)[a-zA-Z0-9\\W]{8,}');
             if (value === '') {
@@ -170,7 +151,7 @@ export default {
                 callback();
             }
         };
-        var checkemail = (rule, value, callback) => {
+        const checkemail = (rule, value, callback) => {
             if (!isemail(value)) {
                 if (value) {
                     return callback(new Error('请输入正确的邮箱'));
@@ -181,10 +162,10 @@ export default {
                 callback();
             }
         };
-        var checkphone = (rule, value, callback) => {
+        const checkphone = (rule, value, callback) => {
             if (!isphone(value)) {
                 if (value) {
-                    return callback(new Error('请输入正确的手机号'));
+                    return callback(new Error('请输入正确的手机号')); 
                 } else {
                     callback();
                 }
@@ -192,18 +173,7 @@ export default {
                 callback();
             }
         };
-        // const validatePass2 = (rule, value, callback) => {
-        //   const reg = new RegExp('^(?![A-Za-z0-9]+$)(?![a-z0-9\\W]+$)(?![A-Za-z\\W]+$)(?![A-Z0-9\\W]+$)[a-zA-Z0-9\\W]{8,}');
-        //   if (value === '') {
-        //     callback(new Error('请再次输入密码'));
-        //   } else if (value !== this.dataForm.ruleForms ) {
-        //     callback(new Error('两次输入密码不一致!'));
-        //   } else if (!reg.test(value)) {
-        //     callback(new Error('密码长度不少于8位，包含英文大小写、特殊字符、数字'));
-        //   } else {
-        //     callback();
-        //   }
-        // };
+  //    
         return {
             name: '',
             islogin: false,
@@ -260,11 +230,7 @@ export default {
     },
     created() {
         this.role = JSON.parse(window.localStorage.getItem('role'));
-
-        //  this.activeIndex = this.$route.path
         this.handleSelect(this.$route.path);
-        // this.file = JSON.parse(window.localStorage.getItem('file'))
-
         if (this.role.auth[0].authority == 'ROLE_ADMIN') {
             return;
         } else {
@@ -275,7 +241,6 @@ export default {
         // 选择不同的tab菜单
         handleSelect(key, keyPath) {
             this.activeIndex = key;
-
             this.file.forEach((item, index) => {
                 if (item.path == key) {
                     item.show = true;
@@ -360,9 +325,6 @@ export default {
             });
         },
 
-        geren() {
-            this.$router.push('/Persdata');
-        },
         async users() {
             let res = await getme();
             this.dataForm = res;

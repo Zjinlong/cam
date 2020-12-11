@@ -56,23 +56,18 @@ const i18n = new VueI18n({
 });
 
 //使用钩子函数对路由进行权限跳转
-// router.beforeEach((to, from, next) => {
-//     // document.title = `${to.meta.title} | 输电线路人工智能管理系统`;
-//     // document.title = `${to.meta.title}直升机巡视图片查缺系统`;
-//     // document.title = `${to.meta.title}变电站(配电站)巡视图片查缺系统`;
-//     const username = localStorage.getItem('username');
-
-//     if (!username && to.path !== '/login') {
-//         next('/login');
-//     } else if (to.meta.permission) {
-        
-//         // 如果有用户信息 则可以登录
-//         username ? next() : next('/403');
-//     } else {
-//         // console.log(!username && to.path !== '/login',to.meta.permission)
-//         next();
-//     }
-// });
+router.beforeEach((to, from, next) => {
+    const username = localStorage.getItem('username');
+    if (!username && to.path !== '/login') {
+        next('/login');
+    } else if (to.meta.permission) {
+        // 如果有用户信息 则可以登录
+        username ? next() : next('/403');
+    } else {
+        // console.log(!username && to.path !== '/login',to.meta.permission)
+        next();
+    }
+});
 async function init() {
      await getServerConfig();
      new Vue({

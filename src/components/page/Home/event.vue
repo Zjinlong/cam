@@ -34,9 +34,7 @@ export default {
     data(){
         return{
             data:[  
-             {id:0,camName:  '白色摄像机',x:10,y:25,w:60,h:60,alertTypeName:'离岗',timeStamp:'2020-03-31 10:18:04',alertImgUrl:'https://www.lwavn.club/picture/cover/2f6473a4bb7b40cb97da72d4519f72fa?v=1594625769776',statusName: "未处理",memo: "dummy result.",year: 2020,month: 9,date: 15,},
-             {id:1,camName:  '走廊摄像机',x:10,y:25,w:60,h:60,alertTypeName:'安全帽',timeStamp:'2020-03-31 10:18:04',alertImgUrl:'https://www.lwavn.club/picture/cover/2f6473a4bb7b40cb97da72d4519f72fa?v=1594625769776',statusName: "未处理",memo: "dummy result.",year: 2020,month: 9,date: 15,},
-             {id:2,camName:  '灰色摄像机',x:10,y:25,w:60,h:60,alertTypeName:'非法出入',timeStamp:'2020-03-31 10:18:04',alertImgUrl:'https://www.lwavn.club/picture/cover/2f6473a4bb7b40cb97da72d4519f72fa?v=1594625769776',statusName: "未处理",memo: "dummy result.",year: 2020,month: 9,date: 15,},
+            
             ],
            
         value3:new Date(),
@@ -49,9 +47,7 @@ export default {
     },
 created(){
 },
-mounted(){
- 
-    
+mounted(){  
 this.ByStatu()
 },
 methods:{

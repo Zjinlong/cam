@@ -292,6 +292,7 @@ export default {
             }
         },
         handleSizeChange(val) {},
+        // 分页
         handleCurrentChange(val) {
             this.pageNum = val;
             this.tableDatas = this.tableData.slice((val - 1) * this.pageSize, val * this.pageSize);
@@ -309,6 +310,7 @@ export default {
         handleSelectionChange(val) {
             this.multipleSelection = val;
         },
+        // 批量删除
         async pldel() {
             if (this.multipleSelection.length == 0) {
                 this.$message({
@@ -354,6 +356,7 @@ export default {
             this.isbj = false;
             this.form = {};
         },
+        // 关闭弹窗 
         resetForm(formName) {
             this.dialogFormVisible = false;
             this.$refs[formName].resetFields();

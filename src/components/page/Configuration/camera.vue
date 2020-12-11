@@ -3,12 +3,9 @@
     <el-button type="primary" @click="establish()">添加摄像头</el-button>   
     <el-button type="primary" @click="pldel()">批量删除</el-button>   
 
-
+ <!-- element弹框 -->
 <el-dialog :title="camtitle" :visible.sync="dialogFormVisible"  width="39%" top="5vh" :close-on-click-modal='false' @close="resetForm('ruleForm')" v-dialogDrag>
-    <!-- <div style="float: right;"> -->
-
     <el-form :model="dynamicValidateForm" style="width:90%"  ref="dynamicValidateForm" :label-width="formLabelWidth" class="demo-dynamic"  v-if="!isbj">
-    
            <el-form-item>
       <el-button @click="addDomain">新增摄像机 +</el-button>
   </el-form-item>
@@ -25,9 +22,7 @@
     <el-input v-model="domain.value" style="display: inline-block;width:43%"></el-input><el-input v-model.number="domain.channel" style="display: inline-block;width:32%;margin:0 0px 0 10px" placeholder="请输入通道号" ></el-input>  <el-button @click.prevent="removeDomain(domain)" style="float: right;width:20%" v-if="index !=0">删除</el-button> 
   </el-form-item>
 </el-form>
-  <!-- </div> -->
 <div >
-
 
   <el-form :model="form" style="width:90%" :rules="rules" ref="ruleForm" :label-width="formLabelWidth">
     <el-form-item  label="摄像头" prop="name" v-if="isbj">
@@ -89,6 +84,8 @@
     <el-button type="primary" @click="confirm('ruleForm')">确 定</el-button>
   </div>
 </el-dialog>
+
+
 <el-form :inline="true" :model="formInline" class="demo-form-inline">
   <el-form-item label="摄像头">
     <el-input v-model="formInline.user" placeholder="请输入摄像头名称"></el-input>
@@ -97,6 +94,7 @@
     <el-button type="primary" @click="onSubmit">搜索</el-button>
   </el-form-item>
 </el-form>
+
 <el-table
     :data="tableDatas"
     :header-cell-style="getRowClass"
@@ -204,13 +202,6 @@
 >
   <el-button slot="reference" type="text" size="small">删除</el-button>
 </el-popconfirm>
-        <!-- <el-button
-          @click.native.prevent=
-          >
-          删除
-        </el-button> -->
-
-
       </template>
     </el-table-column>
    
@@ -378,31 +369,6 @@ export default {
         // this.tableDatas = this.tableData.slice(0, this.pageSize);
     },
     methods: {
-        move(e) {
-            let odiv = e.target; //获取目标元素
-
-            //算出鼠标相对元素的位置
-            let disX = e.clientX - odiv.offsetLeft;
-            let disY = e.clientY - odiv.offsetTop;
-            document.onmousemove = e => {
-                //鼠标按下并移动的事件
-                //用鼠标的位置减去鼠标相对元素的位置，得到元素的位置
-                let left = e.clientX - disX;
-                let top = e.clientY - disY;
-
-                //绑定元素位置到positionX和positionY上面
-                this.positionX = top;
-                this.positionY = left;
-
-                //移动当前元素
-                odiv.style.left = left + 'px';
-                odiv.style.top = top + 'px';
-            };
-            document.onmouseup = e => {
-                document.onmousemove = null;
-                document.onmouseup = null;
-            };
-        },
         handleSelectionChange(val) {
             this.multipleSelection = val;
         },
@@ -505,7 +471,6 @@ export default {
             this.dynamicValidateForm.domains.splice(1);
             this.dynamicValidateForm.domains[0].value = '';
             this.dynamicValidateForm.domains[0].channel = '';
-
             this.val = '';
             //   this.form.startTime = [new Date(2020, 9, 22, 10, 5), new Date(2020, 9, 22, 11, 23)]
             this.dialogFormVisible = true;
@@ -514,6 +479,7 @@ export default {
 
         //   确认添加或修改
         async confirm(formName) {
+            // 判断是添加还是编辑
             if (this.isbj) {
                 this.$refs[formName].validate(valid => {
                     if (valid) {
@@ -536,15 +502,14 @@ export default {
                         this.$refs[formName].validate(valid => {
                             if (valid) {
                                 if (this.val) {
-                                       for (let item of this.dynamicValidateForm.domains) {
-                                           if(item.channel == ''){
-                                                 this.$message({
-                                message: '请填写通道号',
-                                type: 'error'
-                            });
-                                                return
-                                           }
-
+                                    for (let item of this.dynamicValidateForm.domains) {
+                                        if (item.channel == '') {
+                                            this.$message({
+                                                message: '请填写通道号',
+                                                type: 'error'
+                                            });
+                                            return;
+                                        }
                                     }
                                     for (let item of this.dynamicValidateForm.domains) {
                                         this.request(item.value, item.channel);

@@ -90,32 +90,21 @@ export default {
         draw(o) {
             // var ctx = document.getElementById('canvas').getContext('2d');
             var img = new Image();
-            // this.dispose.alertImgUrl ='https://www.lwavn.club/picture/cover/2f6473a4bb7b40cb97da72d4519f72fa?v=1594625769776'
-            img.src = this.dispose.alertImgUrl;
-    
-            if (img.complete) {
-                // console.log(img.width, img.height,"阿三大苏打萨达萨达是");
-            }
-            
+            img.src = this.dispose.alertImgUrl;  
             let _this = this
             img.onload = function() {
-
-          
-                if(img.width >= img.height){
                 let zw = 300 / img.width;
-                let imgwh = (img.height/img.width)
-                this.imgHeight = imgwh*img.width
+           //计算图片缩放比例,利用CSS实现画框
+                this.imgHeight = zw*img.height
                 let zh =   this.imgHeight  / img.height;
-
-                }else{
-                  this.imgHeight = img.width
-                }
-       
+    
                 _this.dispose.xs = _this.dispose.x * zw;
                 _this.dispose.ys = _this.dispose.y * zw;
                 _this.dispose.ws = _this.dispose.w * zw;
                 _this.dispose.hs = _this.dispose.h * zw;
                   _this.isImg = true   
+            
+            //使用canvar实现画框
                 // ctx.drawImage(img, img.width, img.height);
                 // ctx.beginPath();
                 // ctx.moveTo(x, y);

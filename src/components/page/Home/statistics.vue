@@ -70,6 +70,7 @@ export default {
                     res.unshift(obj);
                 }
             } else {
+                        // 计算月份天数
                 nums = _.getDays(this.year, this.month);
                 this.ismonth = true;
                 for (let is = 1; is <= nums; is++) {
@@ -79,36 +80,36 @@ export default {
                     res.unshift(obj);
                 }
             }
-
+                      // 把数据根据天\月归类
             let arr = _.repeatCount(res, this.ismonth);
 
             this.zxts(arr);
         },
 
-        getCount(arr, rank, ranktype) {
-            var obj = {},
-                k,
-                arr1 = [];
-            for (var i = 0, len = arr.length; i < len; i++) {
-                k = arr[i];
-                if (obj[k]) obj[k]++;
-                else obj[k] = 1;
-            }
-            //保存结果{el-'元素'，count-出现次数}
-            for (var o in obj) {
-                arr1.push({ name: o, count: obj[o] });
-            }
-            //排序（降序）
-            arr1.sort(function(n1, n2) {
-                return n2.count - n1.count;
-            });
-            //如果ranktype为1，则为升序，反转数组
-            if (ranktype === 1) {
-                arr1 = arr1.reverse();
-            }
-            var rank1 = rank || arr1.length;
-            return arr1.slice(0, rank1);
-        },
+        // getCount(arr, rank, ranktype) {
+        //     var obj = {},
+        //         k,
+        //         arr1 = [];
+        //     for (var i = 0, len = arr.length; i < len; i++) {
+        //         k = arr[i];
+        //         if (obj[k]) obj[k]++;
+        //         else obj[k] = 1;
+        //     }
+        //     //保存结果{el-'元素'，count-出现次数}
+        //     for (var o in obj) {
+        //         arr1.push({ name: o, count: obj[o] });
+        //     }
+        //     //排序（降序）
+        //     arr1.sort(function(n1, n2) {
+        //         return n2.count - n1.count;
+        //     });
+        //     //如果ranktype为1，则为升序，反转数组
+        //     if (ranktype === 1) {
+        //         arr1 = arr1.reverse();
+        //     }
+        //     var rank1 = rank || arr1.length;
+        //     return arr1.slice(0, rank1);
+        // },
 
         changeTime(name) {
             let arrs = name.split('-');

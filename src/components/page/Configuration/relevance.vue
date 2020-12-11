@@ -118,27 +118,6 @@
     </div>
 <el-divider content-position="left">摄像头模型关联描述</el-divider>
   <el-form :model="form"  :rules="rules" ref="ruleForm">
-         <!-- <el-form-item label="摄像头" :label-width="formLabelWidth">
-    <el-select v-model="camOne" placeholder="请选择摄像头"  style="width:300px">
-      <el-option
-      v-for="item in cams"
-      :key="item.id"
-      :label="item.name"
-      :value="item.id">
-
-    </el-option>
-    </el-select>
-     </el-form-item>
-       <el-form-item label="模型" :label-width="formLabelWidth">
-    <el-select v-model="modOne" placeholder="请选择关联模型"  style="width:300px">
-    <el-option
-      v-for="item in mods"
-      :key="item.id"
-      :label="item.name"
-      :value="item.id">
-    </el-option>
-    </el-select>
-     </el-form-item> -->
          <el-form-item label="描述" :label-width="formLabelWidth" >
       <el-input v-model="form.memo" autocomplete="off" placeholder="请填写描述"></el-input>
     </el-form-item>
@@ -376,10 +355,6 @@ export default {
     },
     created() {
         this.relelist();
-        // for (let item of this.tableData) {
-        //     item.startTime = `${item.start_hour}:${item.start_minute}:${item.start_second}`;
-        //     item.endTime = `${item.end_hour}:${item.end_minute}:${item.end_second}`;
-        // }
     },
     methods: {
         handleCurrent(val) {

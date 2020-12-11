@@ -2,36 +2,6 @@
 <div class="position: relative;">
 
 <div class="user-box" >
-    <!-- <el-button type="primary" @click="establish()">创建用户</el-button>
-
-<el-dialog title="创建账号" :visible.sync="dialogFormVisible" width="25%">
-  <el-form :model="form" style="width:400px">
-    <el-form-item label="用户名" :label-width="formLabelWidth">
-      <el-input v-model="form.name" autocomplete="off" :readonly='isbj'></el-input>
-    </el-form-item>
-    <el-form-item label="密码" :label-width="formLabelWidth">
-      <el-input v-model="form.password" autocomplete="off"></el-input>
-    </el-form-item>
-     <el-form-item label="所在组" :label-width="formLabelWidth">
-    <el-select v-model="form.group" placeholder="请选择"  style="width:300px">
-      <el-option label="A组" value="shanghai"></el-option>
-      <el-option label="B组" value="beijing"></el-option>
-    </el-select>
-     </el-form-item>
-  </el-form>
-  <div slot="footer" class="dialog-footer">
-    <el-button @click="dialogFormVisible = false">取 消</el-button>
-    <el-button type="primary" @click="confirm()">确 定</el-button>
-  </div>
-</el-dialog>
-<el-form :inline="true" :model="formInline" class="demo-form-inline">
-  <el-form-item label="用户名">
-    <el-input v-model="formInline.user" placeholder="请输入用户名"></el-input>
-  </el-form-item>
-  <el-form-item>
-    <el-button type="primary" @click="onSubmit">搜索</el-button>
-  </el-form-item>
-</el-form> --> 
   <p class="bjds">表计读数(未处理 <span style="color:red;fontSize:22px">{{bjval}}</span>)</p>
   <el-table
     :data="tableData"
@@ -85,26 +55,11 @@
           size="small">
           编辑
         </el-button>
-        <!-- <el-button
-          @click.native.prevent="deleteRow(scope.$index, tableData)"
-          type="text"
-          size="small">
-          删除
-        </el-button> -->
+ 
       </template>
     </el-table-column>
   </el-table>
-  <!-- <div class="block">
-  1 2 4 
-    <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page.sync="currentPage"
-      :page-size="100"
-      layout="total,prev, pager, next, jumper"
-      :total="152">
-    </el-pagination>
-  </div> -->
+
    <div class="pop-up" v-if="ispop">
         <Masks :dispose='dispose' @cancel='cancel' @affirm='affirm'/>
     </div>
@@ -164,9 +119,7 @@ export default {
     created() {
         let _this = this;
         _this.getnews();
-        //  setInterval(function(){
-        //  _this.getnews()
-        //  },10000)
+  
         _this.timer = setInterval(function() {
             _this.getnews();
         }, 10000);
@@ -179,10 +132,6 @@ export default {
             let res = await getBiaojiRecordsUnhandledNewest100();
             let bjval = await getBiaojiRecordsUnhandledTotalCount();
             this.bjval = bjval;
-            //  let url = 'http://192.168.43.17:'
-            //            res.forEach(item => {
-            //    item.alertImgUrl = url+item.alertImgUrl
-            //  });
             this.tableData = res;
         },
 

@@ -6,13 +6,7 @@
               
                <div class="pop-content">
                    <div class="pop-img">
-                         <!-- <div :style="{width:dispose.w+'px',height:dispose.h+'px',position:'absolute',left:dispose.x+'px',top:dispose.y+'px',background:'transparent',  border: '2px solid red', zIndex: '999'}" v-show="isImg"> 
-                             <span :style="{position:'absolute',left:'50%',top:'-20px',color:'red' ,zIndex: '999',fontWeight:' 600',transform: 'translateX(-50%)',width: '100px',textAlign: 'center'}">{{dispose.alertTypeName}}</span>
-                         </div> -->
-                        <!-- <img :src="dispose.biaojiImgUrl" alt=""> -->
-                        
                         <el-image style="width: 300px; height: 200px" :src="dispose.biaojiImgUrl" :preview-src-list="[dispose.biaojiImgUrl]" :lazy='true'></el-image>
-                        <!-- <canvas id="canvas" width="300px" height="230px"></canvas>  -->
                    </div>
                    <ul class="pop-list">
                        <li>
@@ -80,7 +74,6 @@ export default {
             }else if(this.dispose.statusName == '误报警'){
                 this.dispose.statusId = 2
             }
-
                this.$emit('affirm', this.dispose);
             
         }

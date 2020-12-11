@@ -61,12 +61,12 @@
                        <span :style="{position:'absolute',left:'50%',top:'-20px',color:'red' ,zIndex: '999',fontWeight:' 600',transform: 'translateX(-50%)',width: '80px',textAlign: 'center'}">{{d.alertTypeName}}</span>
                         </div>
                         <el-image  :src="d.alertImgUrl" :lazy='true'></el-image>
-                        <!-- <canvas id="canvas" width="270px" height="160px"></canvas>  -->
+                        <!-- <canvas id="canvas" width="270px" height="160px"></canvas> -->
                         </li>
       </ul>
         </div>
 
-          <div class="arrow-right" @click='rightmove()'>
+          <div class="arrow-right" @click='rightmove()'>      
            <i class="el-icon-arrow-right" style="zIndex:9999"></i>
            </div> 
     </div>
@@ -110,11 +110,10 @@ export default {
     created() {
         this.camera();
         this.byStatus();
-        // this.ByStatu()
-        // this.ByType()
         this.Newest100();
         this.Newest();
         let _this = this;
+        // 实时报警每10秒请求一次
         _this.timer = setInterval(function() {
             _this.Newest100();
         }, 10000);
@@ -168,7 +167,6 @@ export default {
             this.totalCount();
             if (res) {
                 let ccImg = res;
-                //  let url = 'http://192.168.43.17:'
                 ccImg.forEach(item => {
                     //    item.alertImgUrl = url+item.alertImgUrl
                     var img = new Image();
@@ -186,7 +184,7 @@ export default {
             }
         },
 
-        leftmove() {
+        leftmove() {    
             if (this.xxx < 0) {
                 this.xxx += 6;
             } else {
@@ -211,10 +209,6 @@ export default {
         },
         cancel() {
             this.ispop = false;
-                // this.$message({
-                //     message: '取消编辑',
-                //     type: 'success'
-                // });
         },
         async affirm(dispose) {
             let res = await putId(dispose.id, dispose);

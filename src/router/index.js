@@ -12,13 +12,12 @@ export default new Router({
         },
         {
             path: '/',
-            component: () => import(/* webpackChunkName: "home" */ '../components/common/Home.vue'),
+            component: () => import( '../components/common/Home.vue'),
             meta: { title: '' },
             children: [
                 {
                     path: '/home',
-                    component: () => import(/* webpackChunkName: "analysis" */ '../components/page/Home/home.vue'),
-                    // meta: { title: '智能分析' }
+                    component: () => import( '../components/page/Home/home.vue'),
                     meta: { title: '首页' }
                 },
                 {
@@ -38,12 +37,6 @@ export default new Router({
                     component: () => import( '../components/page/User/user.vue'),
                     meta: { title: '用户管理' }
                 },
-                // {
-              
-                //     path: '/model',
-                //     component: () => import('../components/page/Model/models.vue'),
-                //     meta: { title: '模型管理' }
-                // },
                 {
                     path: '/configuration',
                     component: () => import( '../components/page/Configuration/configuration.vue'),
