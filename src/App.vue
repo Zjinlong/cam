@@ -29,7 +29,7 @@ export default {
       // this.lTime = new Date().getTime()  
     },
     // tTime() {
-    //   this.cTime = new Date().getTime();
+    //   this.cTime = new Date().getTime(); 
     //   if (this.cTime -this.lTime > this.tOut) {
     //     //未登录状态
     //     if(localStorage.getItem('username') == undefined){

@@ -34,7 +34,7 @@
     </el-select>
      </el-form-item>
 
- <el-form-item label="本地目录" :label-width="formLabelWidth" prop='idNameMappingString' v-if="types=='local'">
+  <el-form-item label="本地目录" :label-width="formLabelWidth" prop='idNameMappingString' v-if="types=='local'">
       <el-input v-model="form.txtResBaseDir" autocomplete="off"  placeholder="例:D:vedioSystem_related	xt_res" ></el-input>
     </el-form-item>
     <el-form-item label="模型名字映射" :label-width="formLabelWidth" prop='idNameMappingString'>
@@ -356,7 +356,7 @@ export default {
             this.isbj = false;
             this.form = {};
         },
-        // 关闭弹窗 
+        // 关闭弹窗
         resetForm(formName) {
             this.dialogFormVisible = false;
             this.$refs[formName].resetFields();

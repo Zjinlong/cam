@@ -80,7 +80,7 @@ export default {
                     res.unshift(obj);
                 }
             }
-                      // 把数据根据天\月归类
+                      // 把数据根据天或月归类
             let arr = _.repeatCount(res, this.ismonth);
 
             this.zxts(arr);

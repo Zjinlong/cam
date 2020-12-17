@@ -531,6 +531,7 @@ export default {
                 });
             }
         },
+        // 增加摄像头输入框
         addDomain() {
             this.dynamicValidateForm.domains.push({
                 value: '',
@@ -538,6 +539,7 @@ export default {
                 key: Date.now()
             });
         },
+        // 删除摄像头输入框
         removeDomain(item) {
             var index = this.dynamicValidateForm.domains.indexOf(item);
             if (index !== -1) {

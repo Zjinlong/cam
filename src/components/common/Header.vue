@@ -1,134 +1,136 @@
-<template>
-    <div class="header">
-        <el-row :gutter="20">
-            <el-col :span="6">
-                <div class="header-img">
-                    <img
-                        src=""
-                        alt
-                        class="header-img"
-                        style="width:auto;height:100%"
-                    />
-                   <p class="titleP">
-                     配电站房智能安检系统
-                     </p> 
+                <template>
+                    <div class="header">
+                        <el-row :gutter="20">
+                            <el-col :span="6">
+                                <div class="header-img">
+                                    <img
+                                        src=""
+                                        alt
+                                        class="header-img"
+                                        style="width:auto;height:100%"
+                                    />
+                                <p class="titleP">
+                                    配电站房智能安检系统
+                                    </p> 
+                                </div>
+                            </el-col>
+                            <el-col :span="8" >
+                                <div class="title-content" style="float: right;">
+                    
+                                    <div class="header-tabs">
+                                        <el-menu
+                                            :default-active="activeIndex"
+                                            router
+                                            mode="horizontal"
+                                            @select="handleSelect"
+                                            background-color="#273750"
+                                            text-color="#fff"
+                                            active-text-color="#273750"
+                                        
+                                        >
+                                        <!-- style="width:490px" -->
+                                            <el-menu-item
+                                                v-for="(item,index) in file"
+                                                :key="index"
+                                                :index="item.path"
+                                                class="menui"
+                                                :class="{'aa':item.show==true}"
+                                            >{{item.name}}</el-menu-item>
+                                        </el-menu>
+                                    </div>
+                                </div>
+                            </el-col>
+                        <el-col :span="10" >
+                        <div class="logout">
+                            <el-popover
+                                placement="bottom"
+                                width="100"
+                                trigger="hover">
+                                <ul class="user-list">
+                                    <li @click="grxx()">个人信息</li>
+                                    <li @click="xgmm()">修改密码</li>
+                                </ul>
+                                <span class="log-user" slot="reference">{{userName}}</span>
+                            </el-popover>
+                            |
+                            <span class="log-out" @click="islogin = true">退出</span>
+                        </div>
+                        </el-col>
+                        </el-row>
+                <el-dialog
+                title="退出"
+                :visible.sync="islogin"
+                width="30%"
+                :before-close="handleClose">
+                <span>确定退出登录吗</span>
+                <span slot="footer" class="dialog-footer">
+                    <el-button @click="islogin = false">取 消</el-button>
+                    <el-button type="primary" @click="confirmlog()">确 定</el-button>
+                </span>
+                </el-dialog>
+
+                        <el-dialog :title="title" :visible.sync="dialogpass" width="30%" :close-on-click-modal='false'>
+                <el-form :model="dataForm" style="width:80%" :rules="pwdRule" ref="ruleForms">
+                    <el-form-item label="用户名" :label-width="formLabelWidth">
+                    <el-input v-model="dataForm.userName" :readonly='true'></el-input>
+                    </el-form-item>
+                    <el-form-item label="密码" :label-width="formLabelWidth" prop="pass">
+                    <el-input v-model="dataForm.pass" type='password'></el-input>
+                    </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="dialogpass = false">取 消</el-button>
+                    <el-button type="primary" @click="confirmpass('ruleForms')">确 定</el-button>
                 </div>
-            </el-col>
-            <el-col :span="8" >
-                <div class="title-content" style="float: right;">
-     
-                    <div class="header-tabs">
-                        <el-menu
-                            :default-active="activeIndex"
-                            router
-                            mode="horizontal"
-                            @select="handleSelect"
-                            background-color="#273750"
-                            text-color="#fff"
-                            active-text-color="#273750"
-                           
-                        >
-                         <!-- style="width:490px" -->
-                            <el-menu-item
-                                v-for="(item,index) in file"
-                                :key="index"
-                                :index="item.path"
-                                class="menui"
-                                :class="{'aa':item.show==true}"
-                            >{{item.name}}</el-menu-item>
-                        </el-menu>
+                </el-dialog>
+
+                <el-dialog title="个人信息" :visible.sync="dialoguser" width="30%" :close-on-click-modal='false'>
+                <el-form :model="dataForm" style="width:80%" :rules="pwdRule" ref="ruleuser">
+                    <el-form-item label="手机号" :label-width="formLabelWidth" prop="mobile">
+                    <el-input v-model="dataForm.mobile"></el-input>
+                    </el-form-item>
+                    <el-form-item label="邮箱" :label-width="formLabelWidth" prop="email">
+                    <el-input v-model="dataForm.email" ></el-input>
+                    </el-form-item>
+                        <el-form-item label="姓名" :label-width="formLabelWidth" prop="realName">
+                    <el-input v-model="dataForm.realName" ></el-input>
+                    </el-form-item>
+                </el-form>
+                    <div class="personal-relation">
+                        <div class="relation-item"> <label>用户名: </label>  <span>{{dataForm.userName}} </span></div>
                     </div>
+                    <div class="personal-relation">
+                    <div class="relation-item"> <label>邮箱: </label>  <span >{{dataForm.email}}</span></div>      
+                    </div>
+                    <div class="personal-relation">
+                    <div class="relation-item"><label>角色: </label>  <span >{{dataForm.role=='ROLE_ADMIN'?'管理员':'普通用户'}}</span></div> 
+                    </div>
+                        <div class="personal-relation">
+                    <div class="relation-item"><label>账号创建时间: </label>  <span >{{dataForm.createTime}}</span></div> 
+                    </div>
+                    <div class="personal-relation">
+                    <div class="relation-item"><label>本次登录时间: </label>  <span >{{dataForm.lastLoginTime}}</span></div> 
+                    </div>
+                        <div class="personal-relation">
+                    <div class="relation-item"><label>上次登录时间: </label>  <span >{{dataForm.lastLoginTime}}</span></div> 
+                    </div>
+                    <div class="personal-relation">
+                    <div class="relation-item"><label>登录次数: </label>  <span >{{dataForm.loginCount}}</span></div> 
+                    </div>
+                    <div class="personal-relation">
+                    <div class="relation-item"><label>上次修改密码: </label>  <span>{{dataForm.lastPasswordChange}}</span></div>      
+                    </div>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="dialoguser = false">取 消</el-button>
+                    <el-button type="primary" @click="handesub('ruleuser')">保存</el-button>
                 </div>
-            </el-col>
-        <el-col :span="10" >
-          <div class="logout">
-            <el-popover
-  placement="bottom"
-  width="100"
-  trigger="hover">
-  <ul class="user-list">
-    <li @click="grxx()">个人信息</li>
-    <li @click="xgmm()">修改密码</li>
-  </ul>
-  <span class="log-user" slot="reference">{{userName}}</span>
-</el-popover>
-            |
-            <span class="log-out" @click="islogin = true">退出</span>
-          </div>
-        </el-col>
-        </el-row>
+                </el-dialog>
 
-        <el-dialog
-  title="退出"
-  :visible.sync="islogin"
-  width="30%"
-  :before-close="handleClose">
-  <span>确定退出登录吗</span>
-  <span slot="footer" class="dialog-footer">
-    <el-button @click="islogin = false">取 消</el-button>
-    <el-button type="primary" @click="confirmlog()">确 定</el-button>
-  </span>
-</el-dialog>
+                    </div>
+                </template>
 
-        <el-dialog :title="title" :visible.sync="dialogpass" width="30%" :close-on-click-modal='false'>
-  <el-form :model="dataForm" style="width:80%" :rules="pwdRule" ref="ruleForms">
-    <el-form-item label="用户名" :label-width="formLabelWidth">
-      <el-input v-model="dataForm.userName" :readonly='true'></el-input>
-    </el-form-item>
-    <el-form-item label="密码" :label-width="formLabelWidth" prop="pass">
-      <el-input v-model="dataForm.pass" type='password'></el-input>
-    </el-form-item>
-  </el-form>
-  <div slot="footer" class="dialog-footer">
-    <el-button @click="dialogpass = false">取 消</el-button>
-    <el-button type="primary" @click="confirmpass('ruleForms')">确 定</el-button>
-  </div>
-</el-dialog>
 
-<el-dialog title="个人信息" :visible.sync="dialoguser" width="30%" :close-on-click-modal='false'>
-  <el-form :model="dataForm" style="width:80%" :rules="pwdRule" ref="ruleuser">
-    <el-form-item label="手机号" :label-width="formLabelWidth" prop="mobile">
-      <el-input v-model="dataForm.mobile"></el-input>
-    </el-form-item>
-    <el-form-item label="邮箱" :label-width="formLabelWidth" prop="email">
-      <el-input v-model="dataForm.email" ></el-input>
-    </el-form-item>
-        <el-form-item label="姓名" :label-width="formLabelWidth" prop="realName">
-      <el-input v-model="dataForm.realName" ></el-input>
-    </el-form-item>
-  </el-form>
-    <div class="personal-relation">
-        <div class="relation-item"> <label>用户名: </label>  <span>{{dataForm.userName}} </span></div>
-    </div>
-     <div class="personal-relation">
-      <div class="relation-item"> <label>邮箱: </label>  <span >{{dataForm.email}}</span></div>      
-    </div>
-       <div class="personal-relation">
-      <div class="relation-item"><label>角色: </label>  <span >{{dataForm.role=='ROLE_ADMIN'?'管理员':'普通用户'}}</span></div> 
-    </div>
-        <div class="personal-relation">
-      <div class="relation-item"><label>账号创建时间: </label>  <span >{{dataForm.createTime}}</span></div> 
-    </div>
-    <div class="personal-relation">
-      <div class="relation-item"><label>本次登录时间: </label>  <span >{{dataForm.lastLoginTime}}</span></div> 
-    </div>
-        <div class="personal-relation">
-      <div class="relation-item"><label>上次登录时间: </label>  <span >{{dataForm.lastLoginTime}}</span></div> 
-    </div>
-     <div class="personal-relation">
-      <div class="relation-item"><label>登录次数: </label>  <span >{{dataForm.loginCount}}</span></div> 
-    </div>
-       <div class="personal-relation">
-      <div class="relation-item"><label>上次修改密码: </label>  <span>{{dataForm.lastPasswordChange}}</span></div>      
-    </div>
-  <div slot="footer" class="dialog-footer">
-    <el-button @click="dialoguser = false">取 消</el-button>
-    <el-button type="primary" @click="handesub('ruleuser')">保存</el-button>
-  </div>
-</el-dialog>
 
-    </div>
-</template>
 <script>
 import bus from '../common/bus';
 import cryptoJs from 'crypto-js';
@@ -140,7 +142,7 @@ import { isuser, ispass, isemail, isphone } from '../page/User/regex.js';
 
 export default {
     data() {
-    // 自定义验证
+        // 自定义验证
         const validatePass = (rule, value, callback) => {
             const reg = new RegExp('^(?![A-Za-z0-9]+$)(?![a-z0-9\\W]+$)(?![A-Za-z\\W]+$)(?![A-Z0-9\\W]+$)[a-zA-Z0-9\\W]{8,}');
             if (value === '') {
@@ -165,7 +167,7 @@ export default {
         const checkphone = (rule, value, callback) => {
             if (!isphone(value)) {
                 if (value) {
-                    return callback(new Error('请输入正确的手机号')); 
+                    return callback(new Error('请输入正确的手机号'));
                 } else {
                     callback();
                 }
@@ -173,7 +175,7 @@ export default {
                 callback();
             }
         };
-  //    
+        //
         return {
             name: '',
             islogin: false,

@@ -68,7 +68,9 @@ export default {
     };
   },
   created: function () {
+    console.log($('.login-btn'))
     const self = this;
+   
     document.onkeypress = function (e) {
       var keycode = document.all ? event.keyCode : e.which;
       if (keycode == 13) {

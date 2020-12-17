@@ -412,6 +412,7 @@ export default {
                 }
             });
         },
+        // 修改密码
         async confirmpass(formName) {
             this.$refs[formName].validate(async valid => {
                 let data = {};
